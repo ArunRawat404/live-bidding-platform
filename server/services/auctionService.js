@@ -17,9 +17,14 @@ function placeBid(itemId, amount, userId) {
         return { success: false, error: 'Auction has ended' };
     }
 
-    // Race Condition Check (Optimistic Locking logic)
+    // Self-Bidding Check
+    if (item.highestBidderId === userId) {
+        return { success: false, error: 'You are already the highest bidder!' };
+    }
+
+    // Price Check
     if (amount <= item.price) {
-        return { success: false, error: 'Outbid: Bid must be higher than current price' };
+        return { success: false, error: 'Bid must be higher than current price' };
     }
 
     // Update State

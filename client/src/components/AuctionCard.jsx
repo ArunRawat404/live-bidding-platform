@@ -83,16 +83,18 @@ const AuctionCard = ({ item, userId, onBid }) => {
 
                 <button
                     onClick={handleBid}
-                    disabled={isEnded}
+                    disabled={isEnded || isWinning}
                     className={`
-            flex-1 py-2 px-4 rounded-lg font-semibold transition-all duration-200
-            ${isEnded
+                        flex-1 py-2 px-4 rounded-lg font-semibold transition-all duration-200
+                        ${isEnded
                             ? 'bg-slate-800 text-slate-600 cursor-not-allowed'
-                            : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/30 active:scale-95'
+                            : isWinning
+                                ? 'bg-emerald-600 text-white cursor-default opacity-90' // <--- Style for Winner
+                                : 'bg-indigo-600 hover:bg-indigo-500 text-white shadow-lg shadow-indigo-500/30 active:scale-95'
                         }
-          `}
+                        `}
                 >
-                    {isEnded ? 'Closed' : 'Bid $10'}
+                    {isEnded ? 'Closed' : isWinning ? 'You are Leading' : 'Bid $10'}
                 </button>
             </div>
         </div>
