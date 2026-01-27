@@ -34,7 +34,7 @@ function getItems() {
         // If auction ended, reset it using the dynamic startPrice
         if (Date.now() > item.endTime) {
             item.endTime = Date.now() + 1000 * 60 * 5; // Reset timer to 5 mins
-            item.price = item.startPrice;
+            item.price = item.price;
             item.highestBidderId = null;
         }
     });
