@@ -1,6 +1,6 @@
 const items = [
-    { id: 1, title: 'Vintage Camera', price: 100, endTime: Date.now() + 1000 * 60 * 5, highestBidderId: null },
-    { id: 2, title: 'Mechanical Keyboard', price: 250, endTime: Date.now() + 1000 * 60 * 5, highestBidderId: null },
+    { id: 1, title: 'Vintage Camera', price: 100, endTime: Date.now() + 1000 * 60, highestBidderId: null },
+    { id: 2, title: 'Mechanical Keyboard', price: 250, endTime: Date.now() + 1000 * 60, highestBidderId: null },
 ];
 
 /**
@@ -36,9 +36,11 @@ function placeBid(itemId, amount, userId) {
 
 function getItems() {
     items.forEach(item => {
-        // If auction ended, reset it using the dynamic startPrice
-        if (Date.now() > item.endTime) {
-            item.endTime = Date.now() + 1000 * 60 * 5; // Reset timer to 5 mins
+        const timeSinceEnd = Date.now() - item.endTime;
+
+        // reset if it ended more than 2 minutes ago (120000 ms)
+        if (timeSinceEnd > 120000) {
+            item.endTime = Date.now() + 1000 * 60 * 5;
             item.price = item.price;
             item.highestBidderId = null;
         }
